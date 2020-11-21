@@ -17,6 +17,6 @@ dependencies {
 }
 
 application {
-    mainClassName = 'com.github.zare88.websearch.WebSearchTelegramBot'
+    mainClassName = 'com.github.zare88.webseartch.WebSearchTelegramBot'
 }
 
