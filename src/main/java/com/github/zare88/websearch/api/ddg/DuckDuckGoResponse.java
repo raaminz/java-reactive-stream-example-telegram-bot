@@ -1,4 +1,4 @@
-package com.github.zare88.webseartch.api.ddg;
+package com.github.zare88.websearch.api.ddg;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;

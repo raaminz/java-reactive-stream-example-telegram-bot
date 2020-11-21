@@ -1,9 +1,9 @@
-package com.github.zare88.webseartch.subscriber;
+package com.github.zare88.websearch.subscriber;
 
 
-import com.github.zare88.webseartch.TelegramBotContext;
-import com.github.zare88.webseartch.api.ddg.DuckDuckGo;
-import com.github.zare88.webseartch.api.ddg.DuckDuckGoResponse;
+import com.github.zare88.websearch.TelegramBotContext;
+import com.github.zare88.websearch.api.ddg.DuckDuckGo;
+import com.github.zare88.websearch.api.ddg.DuckDuckGoResponse;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.AbstractSendRequest;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -39,7 +39,10 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
         try {
             DuckDuckGoResponse response = duckDuckGo.query(keyword).get();
             AbstractSendRequest<?> request;
-            if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
+            if (keyword.equals("/start")){
+                request = new SendMessage(update.message().chat().id() , "well come!");
+            }
+            else if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
                 request = new SendMessage(update.message().chat().id(), "No result has found!!");
             } else {
                 String text = duckDuckGo.getFormattedText(keyword, response.getAbstractText());

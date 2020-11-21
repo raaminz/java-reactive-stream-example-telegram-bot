@@ -1,6 +1,6 @@
-package com.github.zare88.webseartch.subscriber;
+package com.github.zare88.websearch.subscriber;
 
-import com.github.zare88.webseartch.db.Requests;
+import com.github.zare88.websearch.db.Requests;
 import com.pengrad.telegrambot.model.Update;
 
 import java.time.LocalDateTime;

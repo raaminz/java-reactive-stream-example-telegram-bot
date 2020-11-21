@@ -1,4 +1,4 @@
-package com.github.zare88.webseartch.db;
+package com.github.zare88.websearch.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
