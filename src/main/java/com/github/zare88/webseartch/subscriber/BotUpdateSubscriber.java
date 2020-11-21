@@ -39,7 +39,10 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
         try {
             DuckDuckGoResponse response = duckDuckGo.query(keyword).get();
             AbstractSendRequest<?> request;
-            if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
+            if(keyword.equals("/start")){
+                request = new SendMessage(update.message().chat().id() , "well come!");
+            }
+            else if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
                 request = new SendMessage(update.message().chat().id(), "No result has found!!");
             } else {
                 String text = duckDuckGo.getFormattedText(keyword, response.getAbstractText());
