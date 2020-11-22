@@ -14,17 +14,17 @@ public class WebSearchTelegramBot {
         if (args.length == 0) {
             throw new IllegalArgumentException("Telegram bot token required as argument.");
         }
-        TelegramBotContext.INSTANCE.setBotToken(args[0]);
+        TelegramBotContext.INSTANCE.initializeBot(args[0]);
         new WebSearchTelegramBot().startListening();
     }
 
     public void startListening() {
-        SubmissionPublisher<Update> publisher = new SubmissionPublisher<>();
+        var publisher = new SubmissionPublisher<Update>();
 
         publisher.subscribe(new BotUpdateSubscriber());
         publisher.subscribe(new DataPersistSubscriber());
 
-        TelegramBotContext.INSTANCE.getTelegramBot().setUpdatesListener(updates -> {
+        TelegramBotContext.INSTANCE.getTelegramBot().setUpdatesListener((var updates) -> {
             updates.forEach(publisher::submit);
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });

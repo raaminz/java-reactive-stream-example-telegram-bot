@@ -28,8 +28,8 @@ public class DataPersistSubscriber implements Flow.Subscriber<Update> {
 
     @Override
     public void onNext(Update update) {
-        Long chatId = update.message().chat().id();
-        String text = update.message().text();
+        var chatId = update.message().chat().id();
+        var text = update.message().text();
         logger.log(Level.INFO, () -> String.format("&&& New Request logged. chatId: %d , text: %s", chatId, text));
 
         Requests.DAO.insert(LocalDateTime.now(), chatId, text);

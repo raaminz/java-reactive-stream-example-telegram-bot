@@ -1,9 +1,6 @@
 package com.github.zare88.websearch.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,8 +16,8 @@ public class Requests {
         }
 
         public static void createTable() {
-            try (Connection connection = DBConnection.INSTANCE.getConnection()) {
-                try (Statement statement = connection.createStatement()) {
+            try (var connection = DBConnection.INSTANCE.getConnection()) {
+                try (var statement = connection.createStatement()) {
                     statement.execute("CREATE TABLE IF NOT EXISTS REQUESTS (" +
                             "ID INTEGER NOT NULL AUTO_INCREMENT," +
                             "CHAT_ID INTEGER NOT NULL," +
@@ -43,9 +40,9 @@ public class Requests {
         public static void insert(LocalDateTime dateTime, Long chatId, String text) {
             Objects.requireNonNull(dateTime);
             Objects.requireNonNull(text);
-            String sql = "INSERT INTO REQUESTS (REQUEST_DATE, CHAT_ID, TEXT) VALUES(?,?,?)";
-            try (Connection connection = DBConnection.INSTANCE.getConnection()) {
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            var sql = "INSERT INTO REQUESTS (REQUEST_DATE, CHAT_ID, TEXT) VALUES(?,?,?)";
+            try (var connection = DBConnection.INSTANCE.getConnection()) {
+                try (var statement = connection.prepareStatement(sql)) {
                     statement.setObject(1, dateTime);
                     statement.setLong(2, chatId);
                     statement.setString(3, text);

@@ -11,11 +11,11 @@ public class TelegramBotContext {
     private TelegramBotContext() {
     }
 
-    public TelegramBot getTelegramBot() {
-        return Objects.requireNonNull(bot);
+    public void initializeBot(String token) {
+        bot = new TelegramBot(Objects.requireNonNull(token));
     }
 
-    public void setBotToken(String token) {
-        bot = new TelegramBot(token);
+    public TelegramBot getTelegramBot() {
+        return Objects.requireNonNull(bot);
     }
 }

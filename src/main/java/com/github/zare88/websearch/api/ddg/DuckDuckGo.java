@@ -21,7 +21,7 @@ public class DuckDuckGo {
     private static DuckDuckGoResponse convertToResponse(String responseStr) {
         @SuppressWarnings("unchecked")
         Map<String, String> responseMap = new Gson().fromJson(responseStr, Map.class);
-        DuckDuckGoResponse response = new DuckDuckGoResponse();
+        var response = new DuckDuckGoResponse();
         response.setAbstractText(responseMap.get("AbstractText"));
         response.setAbstractURL(responseMap.get("AbstractURL"));
         response.setImageURL(responseMap.get("Image"));
@@ -30,7 +30,7 @@ public class DuckDuckGo {
     }
 
     private static CompletableFuture<byte[]> queryImage(String relativeImageURL) {
-        HttpRequest request = HttpRequest.newBuilder()
+        var request = HttpRequest.newBuilder()
                 .setHeader("User-Agent", USER_AGENT)
                 .uri(URI.create(String.format("%s/%s", API_BASE_URL, relativeImageURL)))
                 .GET()
@@ -56,7 +56,7 @@ public class DuckDuckGo {
         if (keyword.trim().equals("")) {
             throw new IllegalStateException("Keyword is empty");
         }
-        HttpRequest request = HttpRequest.newBuilder()
+        var request = HttpRequest.newBuilder()
                 .setHeader("User-Agent", USER_AGENT)
                 .uri(URI.create(String.format("%s?q=%s&no_html=1&skip_disambig=1&format=json&no_redirect=1",
                         API_BASE_URL,

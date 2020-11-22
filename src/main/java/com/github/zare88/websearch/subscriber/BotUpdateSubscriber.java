@@ -3,7 +3,6 @@ package com.github.zare88.websearch.subscriber;
 
 import com.github.zare88.websearch.TelegramBotContext;
 import com.github.zare88.websearch.api.ddg.DuckDuckGo;
-import com.github.zare88.websearch.api.ddg.DuckDuckGoResponse;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.AbstractSendRequest;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -33,17 +32,16 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
 
     @Override
     public void onNext(Update update) {
-        String keyword = update.message().text();
+        var keyword = update.message().text();
         logger.log(Level.INFO, () -> String.format("####Received a new search keyword : %s", keyword));
-        DuckDuckGo duckDuckGo = new DuckDuckGo();
+        var duckDuckGo = new DuckDuckGo();
         try {
-            DuckDuckGoResponse response;
             AbstractSendRequest<?> request;
             if (keyword != null) {
                 if (keyword.equals("/start")) {
-                    request = new SendMessage(update.message().chat().id(), "well come!");
+                    request = new SendMessage(update.message().chat().id(), "welcome !");
                 } else {
-                    response = duckDuckGo.query(keyword).get();
+                    var response = duckDuckGo.query(keyword).get();
                     if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
                         request = new SendMessage(update.message().chat().id(), "No result has found!!");
                     } else {
@@ -56,8 +54,9 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
                         }
                     }
                 }
+            } else {
+                request = new SendMessage(update.message().chat().id(), "please send a word or text to search!");
             }
-            else request = new SendMessage(update.message().chat().id() , "please send word or text!");
             TelegramBotContext.INSTANCE.getTelegramBot().execute(request);
         } catch (InterruptedException | ExecutionException e) {
             throw new IllegalStateException(e);
