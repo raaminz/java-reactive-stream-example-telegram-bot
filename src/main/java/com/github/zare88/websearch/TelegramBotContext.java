@@ -1,4 +1,4 @@
-package com.github.zare88.webseartch;
+package com.github.zare88.websearch;
 
 import com.pengrad.telegrambot.TelegramBot;
 

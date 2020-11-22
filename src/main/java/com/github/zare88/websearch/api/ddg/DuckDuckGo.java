@@ -1,4 +1,4 @@
-package com.github.zare88.webseartch.api.ddg;
+package com.github.zare88.websearch.api.ddg;
 
 import com.google.gson.Gson;
 

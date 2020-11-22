@@ -1,7 +1,7 @@
-package com.github.zare88.webseartch;
+package com.github.zare88.websearch;
 
-import com.github.zare88.webseartch.subscriber.BotUpdateSubscriber;
-import com.github.zare88.webseartch.subscriber.DataPersistSubscriber;
+import com.github.zare88.websearch.subscriber.BotUpdateSubscriber;
+import com.github.zare88.websearch.subscriber.DataPersistSubscriber;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 

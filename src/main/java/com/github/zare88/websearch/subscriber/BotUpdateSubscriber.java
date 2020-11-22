@@ -1,9 +1,9 @@
-package com.github.zare88.webseartch.subscriber;
+package com.github.zare88.websearch.subscriber;
 
 
-import com.github.zare88.webseartch.TelegramBotContext;
-import com.github.zare88.webseartch.api.ddg.DuckDuckGo;
-import com.github.zare88.webseartch.api.ddg.DuckDuckGoResponse;
+import com.github.zare88.websearch.TelegramBotContext;
+import com.github.zare88.websearch.api.ddg.DuckDuckGo;
+import com.github.zare88.websearch.api.ddg.DuckDuckGoResponse;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.AbstractSendRequest;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -37,25 +37,34 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
         logger.log(Level.INFO, () -> String.format("####Received a new search keyword : %s", keyword));
         DuckDuckGo duckDuckGo = new DuckDuckGo();
         try {
-            DuckDuckGoResponse response = duckDuckGo.query(keyword).get();
+            DuckDuckGoResponse response;
             AbstractSendRequest<?> request;
-            if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
-                request = new SendMessage(update.message().chat().id(), "No result has found!!");
-            } else {
-                String text = duckDuckGo.getFormattedText(keyword, response.getAbstractText());
-                if (response.getImageURL() == null || response.getImageURL().isBlank()) {
-                    request = new SendMessage(update.message().chat().id(), text);
+            if (keyword != null) {
+                if (keyword.equals("/start")) {
+                    request = new SendMessage(update.message().chat().id(), "well come!");
                 } else {
-                    request = new SendPhoto(update.message().chat().id(),
-                            response.getImageData().get()).caption(text);
+                    response = duckDuckGo.query(keyword).get();
+                    if (response.getAbstractText() == null || response.getAbstractText().isBlank()) {
+                        request = new SendMessage(update.message().chat().id(), "No result has found!!");
+                    } else {
+                        String text = duckDuckGo.getFormattedText(keyword, response.getAbstractText());
+                        if (response.getImageURL() == null || response.getImageURL().isBlank()) {
+                            request = new SendMessage(update.message().chat().id(), text);
+                        } else {
+                            request = new SendPhoto(update.message().chat().id(),
+                                    response.getImageData().get()).caption(text);
+                        }
+                    }
                 }
             }
+            else request = new SendMessage(update.message().chat().id() , "please send word or text!");
             TelegramBotContext.INSTANCE.getTelegramBot().execute(request);
         } catch (InterruptedException | ExecutionException e) {
             throw new IllegalStateException(e);
         } finally {
             subscription.request(1);
         }
+
     }
 
     @Override
