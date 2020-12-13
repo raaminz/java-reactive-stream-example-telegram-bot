@@ -33,7 +33,7 @@ public class BotUpdateSubscriber implements Flow.Subscriber<Update> {
     @Override
     public void onNext(Update update) {
         var keyword = update.message().text();
-        logger.log(Level.INFO, () -> String.format("####Received a new search keyword : %s", keyword));
+        logger.log(Level.INFO, () -> String.format("#### Received a new search keyword : %s", keyword));
         var duckDuckGo = new DuckDuckGo();
         try {
             AbstractSendRequest<?> request;

@@ -43,10 +43,11 @@ public class DuckDuckGoResponse {
 
     @Override
     public String toString() {
-        return "DuckDuckGoResponse{" +
-                "abstractText='" + abstractText + '\'' +
-                ", abstractURL='" + abstractURL + '\'' +
-                '}';
+        return """
+                DuckDuckGoResponse{\
+                abstractText='%s'\
+                , abstractURL='%s'\
+                }""".formatted(abstractText,abstractURL);
     }
 
     @Override

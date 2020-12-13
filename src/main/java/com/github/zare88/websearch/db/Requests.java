@@ -18,12 +18,14 @@ public class Requests {
         public static void createTable() {
             try (var connection = DBConnection.INSTANCE.getConnection()) {
                 try (var statement = connection.createStatement()) {
-                    statement.execute("CREATE TABLE IF NOT EXISTS REQUESTS (" +
-                            "ID INTEGER NOT NULL AUTO_INCREMENT," +
-                            "CHAT_ID INTEGER NOT NULL," +
-                            "REQUEST_DATE TIMESTAMP NOT NULL," +
-                            "TEXT VARCHAR(500) NOT NULL" +
-                            ");");
+                    statement.execute("""
+                            CREATE TABLE IF NOT EXISTS REQUESTS (
+                            ID INTEGER NOT NULL AUTO_INCREMENT,
+                            CHAT_ID INTEGER NOT NULL,
+                            REQUEST_DATE TIMESTAMP NOT NULL,
+                            TEXT VARCHAR(500) NOT NULL);
+                            """
+                    );
                 }
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
