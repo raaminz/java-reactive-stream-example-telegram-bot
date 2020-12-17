@@ -47,15 +47,14 @@ public class DuckDuckGoResponse {
                 DuckDuckGoResponse{\
                 abstractText='%s'\
                 , abstractURL='%s'\
-                }""".formatted(abstractText,abstractURL);
+                }""".formatted(abstractText, abstractURL);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DuckDuckGoResponse that = (DuckDuckGoResponse) o;
-        return abstractText.equals(that.abstractText) &&
+        return  (o instanceof DuckDuckGoResponse that) &&
+                abstractText.equals(that.abstractText) &&
                 abstractURL.equals(that.abstractURL) &&
                 Objects.equals(imageURL, that.imageURL);
     }
