@@ -21,12 +21,8 @@ public class DuckDuckGo {
     private static DuckDuckGoResponse convertToResponse(String responseStr) {
         @SuppressWarnings("unchecked")
         Map<String, String> responseMap = new Gson().fromJson(responseStr, Map.class);
-        var response = new DuckDuckGoResponse();
-        response.setAbstractText(responseMap.get("AbstractText"));
-        response.setAbstractURL(responseMap.get("AbstractURL"));
-        response.setImageURL(responseMap.get("Image"));
-        response.setImageData(queryImage(response.getImageURL()));
-        return response;
+        return new DuckDuckGoResponse(responseMap.get("AbstractText"), responseMap.get("AbstractURL"), responseMap.get("Image")
+                , queryImage(responseMap.get("AbstractText")));
     }
 
     private static CompletableFuture<byte[]> queryImage(String relativeImageURL) {
